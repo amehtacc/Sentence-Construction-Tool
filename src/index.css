@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+@keyframes rotateY {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+.rotate-y-animation {
+  animation: rotateY 3s linear infinite;
+}
