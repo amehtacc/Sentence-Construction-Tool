@@ -8,7 +8,7 @@ The **Sentence Construction Tool** is an interactive React-based web application
 
 ## 🚀 Live Project
 
-Check out the live demo: [Sentence Construction Tool](https://your-live-demo-link.netlify.app/)
+Check out the live demo: [Sentence Construction Tool](https://sentence-construction-tool-0425.netlify.app/)
 
 <br>
 
