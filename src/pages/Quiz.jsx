@@ -1,53 +1,23 @@
-import React, { useState, useEffect } from "react";
-import ProgressBar from "../components/ProgressBar";
+import React from "react";
 import { ArrowRight } from "lucide-react";
-import useQuestions from "../hooks/useQuestions.js";
 import { useNavigate } from "react-router-dom";
-import useTimer from "../hooks/useTimer.js";
+import ProgressBar from "../components/ProgressBar";
+import { useQuiz } from '../contexts/QuizContext'
 
 function Quiz() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  const { data } = useQuestions("http://localhost:3001/data");
-
-  const currentQuestion = data?.[currentIndex];
-  const parts = currentQuestion?.question?.split("_____________");
-  const blanks = parts?.length - 1;
-
-  const { timer } = useTimer(currentIndex, handleNext);
   const navigate = useNavigate();
-  function handleNext() {
-    if (currentIndex < data?.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    } else {
-      navigate("/result");
-    }
-  }
-
-  function handleSelectOption(option) {
-    // Ignore if already selected
-    if (selectedOptions.includes(option)) return;
-
-    const firstEmptyIndex = selectedOptions.findIndex((item) => item === null);
-    if (firstEmptyIndex !== -1) {
-      const updated = [...selectedOptions];
-      updated[firstEmptyIndex] = option;
-      setSelectedOptions(updated);
-    }
-  }
-
-  function handleRemoveSelected(indexToRemove) {
-    const updated = [...selectedOptions];
-    updated[indexToRemove] = null;
-    setSelectedOptions(updated);
-  }
-
-  useEffect(() => {
-    if (currentQuestion?.options?.length) {
-      setSelectedOptions(Array(currentQuestion.options.length).fill(null));
-    }
-  }, [currentQuestion]);
+  const {
+    data,
+    currentIndex,
+    currentQuestion,
+    blanks,
+    parts,
+    selectedOptions,
+    handleSelectOption,
+    handleRemoveSelected,
+    handleNext,
+    timer,
+  } = useQuiz();
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
@@ -105,17 +75,15 @@ function Quiz() {
           </div>
           <div className="w-full flex justify-end">
             <button
-              onClick={handleNext}
-              disabled={selectedOptions
-                .slice(0, blanks)
-                .some((opt) => opt === null)}
+              onClick={() => handleNext(navigate)}
+              disabled={selectedOptions.some((opt) => opt === null)}
               className={`w-16 h-16 rounded-lg border-[1px] py-[5px] px-0.5 flex justify-center items-center transition-all duration-200
                 ${
-                  selectedOptions.slice(0, blanks).some((opt) => opt === null)
+                  selectedOptions.some((opt) => opt === null)
                     ? "cursor-not-allowed border-neutral-200 bg-gray-100 text-neutral-300"
                     : "cursor-pointer border-neutral-300 hover:bg-gray-100/60 text-neutral-400"
                 }`}
-              >
+            >
               <ArrowRight />
             </button>
           </div>
