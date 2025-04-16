@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowLeft, EllipsisVertical } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
@@ -12,7 +12,7 @@ function Navbar() {
         {isHome ? (
           <div className="w-5 h-5 lg:w-6 lg:h-6"></div>
         ) : (
-          <ArrowLeft className="w-5 h-5 lg:w-6 lg:h-6 text-neutral-900 cursor-pointer" />
+          <Link to='/'><ArrowLeft className="w-5 h-5 lg:w-6 lg:h-6 text-neutral-900 cursor-pointer" /></Link>
         )}
         <h1 className="font-medium lg:text-lg text-neutral-700">
           Sentence Construction
