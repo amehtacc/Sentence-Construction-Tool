@@ -16,7 +16,7 @@ const useHint = () => {
       setIsLoadingHint(true);
       setShowTooltip(true);
 
-      const apiKey = "AIzaSyAQqFk-Ayw9XGLBSR9gaMuZcJlg3Ib5A7c";
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
